@@ -1,0 +1,53 @@
+---
+interface DownloadFile {
+  os: 'linux' | 'windows' | 'macos';
+  label: string;
+  url: string;
+}
+
+interface Props {
+  version: string;
+  date?: string;
+  files: DownloadFile[];
+  isLatest?: boolean;
+}
+
+const { version, date, files, isLatest = false } = Astro.props;
+
+const icons = {
+  linux: '🐧',
+  windows: '🪟',
+  macos: '🍎',
+};
+---
+
+<div class={`rounded-xl border p-5 ${isLatest ? 'border-emerald-500/40 bg-emerald-500/5' : 'border-zinc-800 bg-zinc-900'}`}>
+  <div class="flex flex-wrap items-center justify-between gap-2">
+    <div class="flex items-center gap-2">
+      <span class={`font-mono text-sm font-semibold ${isLatest ? 'text-emerald-400' : 'text-zinc-200'}`}>
+        v{version}
+      </span>
+      {isLatest && (
+        <span class="rounded bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] uppercase tracking-wider text-emerald-400">
+          Latest
+        </span>
+      )}
+    </div>
+    {date && <span class="text-xs text-zinc-500">{date}</span>}
+  </div>
+
+  <div class="mt-4 flex flex-wrap gap-2">
+    {files.map((file) => (
+      <a
+        href={file.url}
+        target="_blank"
+        rel="noopener"
+        class="group inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3.5 py-2 text-xs text-zinc-300 hover:border-emerald-500/50 hover:text-emerald-400 transition-colors"
+      >
+        <span class="text-sm">{icons[file.os]}</span>
+        <span>{file.label}</span>
+        <span class="text-zinc-600 group-hover:text-emerald-400 transition-colors">↓</span>
+      </a>
+    ))}
+  </div>
+</div>

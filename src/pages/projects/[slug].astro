@@ -53,7 +53,18 @@ const showRequestAccess = !isFPL && !hasDownloads;
       </ul>
     )}
 
-    <div class="mt-10 flex flex-wrap gap-3">
+    {project.data.image && (
+      <figure class="mt-8">
+        <img
+          src={project.data.image.src}
+          alt={project.data.image.alt}
+          loading="lazy"
+          class="w-full rounded-xl border border-zinc-800 bg-zinc-900"
+        />
+      </figure>
+    )}
+
+    <div class="mt-8 flex flex-wrap gap-3">
       {project.data.githubUrl && (
         <a
           href={project.data.githubUrl}

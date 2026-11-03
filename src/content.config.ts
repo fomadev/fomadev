@@ -6,11 +6,12 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    githubUrl: z.string().url(),
+    githubUrl: z.string().url().optional(),
     language: z.string(),
     order: z.number().optional(),
     featured: z.boolean().default(false),
     tags: z.array(z.string()).default([]),
+    license: z.enum(['FPL', 'FCL']).default('FPL'),
     downloads: z.array(z.object({
       os: z.enum(['linux', 'windows', 'macos']),
       label: z.string(),

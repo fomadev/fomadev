@@ -12,6 +12,10 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     tags: z.array(z.string()).default([]),
     license: z.enum(['FPL', 'FCL']).default('FPL'),
+    image: z.object({
+      src: z.string(),
+      alt: z.string(),
+    }).optional(),
     downloads: z.array(z.object({
       os: z.enum(['linux', 'windows', 'macos']),
       label: z.string(),

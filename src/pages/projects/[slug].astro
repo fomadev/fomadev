@@ -19,6 +19,9 @@ const licenseLabel = isFPL ? 'Source-available' : 'Commercial';
 const licenseClass = isFPL
   ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
   : 'bg-amber-500/10 border-amber-500/30 text-amber-400';
+
+const hasDownloads = project.data.downloads && project.data.downloads.length > 0;
+const showRequestAccess = !isFPL && !hasDownloads;
 ---
 
 <Layout
@@ -62,10 +65,17 @@ const licenseClass = isFPL
         </a>
       )}
 
-      {project.data.downloads && project.data.downloads.length > 0 && (
-        project.data.downloads.map((dl) => (
-          <DownloadButton os={dl.os} label={dl.label} url={dl.url} />
-        ))
+      {hasDownloads && project.data.downloads.map((dl) => (
+        <DownloadButton os={dl.os} label={dl.label} url={dl.url} />
+      ))}
+
+      {showRequestAccess && (
+        <a
+          href="mailto:contact@fomadev.com?subject=Kiva%20Studio%20access%20request"
+          class="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-5 py-2.5 text-sm font-medium text-zinc-950 hover:bg-amber-400 transition-colors"
+        >
+          Request access ↗
+        </a>
       )}
     </div>
 

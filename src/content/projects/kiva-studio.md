@@ -6,16 +6,6 @@ order: 9
 featured: true
 tags: [gui, desktop, flutter, kivadb]
 license: FCL
-downloads:
-  - os: windows
-    label: Windows (installer)
-    url: https://github.com/fomadev/kiva-studio/releases
-  - os: linux
-    label: Linux (tar.gz)
-    url: https://github.com/fomadev/kiva-studio/releases
-  - os: macos
-    label: macOS (dmg)
-    url: https://github.com/fomadev/kiva-studio/releases
 ---
 
 Kiva Studio is the graphical client for [KivaDB](https://github.com/fomadev/kiva-db).
@@ -52,4 +42,4 @@ Works with both **KivaDB 2.0** and **1.x**, adapting to the version the server a
 
 Kiva Studio is a commercial product distributed under the
 **Fordima Commercial License (FCL)**. Binary releases are provided per platform.
-The source code is not publicly available.
+The source code is not publicly available. Contact us to request access.

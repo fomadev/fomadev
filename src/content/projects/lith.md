@@ -21,10 +21,10 @@ Lith is a lightweight HTTP server built from scratch in C11.
 downloads:
   - os: linux
     label: Linux (x86_64)
-    url: https://github.com/fomadev/lith/releases
+    url: https://github.com/fomadev/lith/releases/download/v1.0.0/lith-v1.0.0-linux-x64.tar.gz
   - os: windows
     label: Windows (x64)
-    url: https://github.com/fomadev/lith/releases
+    url: https://github.com/fomadev/lith/releases/download/v1.0.0/lith-v1.0.0-linux-x64.tar.gz
   - os: macos
     label: macOS (ARM64)
-    url: https://github.com/fomadev/lith/releases
+    url: https://github.com/fomadev/lith/releases/download/v1.0.0/lith-v1.0.0-macos.tar.gz

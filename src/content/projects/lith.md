@@ -16,3 +16,15 @@ Lith is a lightweight HTTP server built from scratch in C11.
 - Binary around 300 KB
 - Windows, Linux and macOS support
 - Security hardening out of the box
+
+## Download
+downloads:
+  - os: linux
+    label: Linux (x86_64)
+    url: https://github.com/fomadev/lith/releases
+  - os: windows
+    label: Windows (x64)
+    url: https://github.com/fomadev/lith/releases
+  - os: macos
+    label: macOS (ARM64)
+    url: https://github.com/fomadev/lith/releases

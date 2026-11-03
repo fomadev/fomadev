@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import DownloadButton from '../../components/DownloadButton.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -26,6 +27,9 @@ const { Content } = await render(project);
       <span class="rounded bg-zinc-800 px-2 py-1 text-xs text-zinc-300">
         {project.data.language}
       </span>
+      <span class="rounded bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 text-xs text-emerald-400">
+        Source-available
+      </span>
     </div>
 
     <p class="mt-4 text-lg text-zinc-400">{project.data.description}</p>
@@ -40,16 +44,29 @@ const { Content } = await render(project);
       </ul>
     )}
 
-    <div class="mt-8">
+    <!-- Actions : GitHub + Téléchargements -->
+    <div class="mt-10 flex flex-wrap gap-3">
       <a
         href={project.data.githubUrl}
         target="_blank"
         rel="noopener"
-        class="inline-block rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-medium text-zinc-950 hover:bg-emerald-400 transition-colors"
+        class="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-medium text-zinc-950 hover:bg-emerald-400 transition-colors"
       >
         View on GitHub ↗
       </a>
+
+      {project.data.downloads && project.data.downloads.length > 0 && (
+        project.data.downloads.map((dl) => (
+          <DownloadButton os={dl.os} label={dl.label} url={dl.url} />
+        ))
+      )}
     </div>
+
+    {project.data.downloads && project.data.downloads.length === 1 && project.data.downloads[0].os === 'windows' && (
+      <p class="mt-3 text-xs text-zinc-500">
+        Linux and macOS builds are planned.
+      </p>
+    )}
 
     <div class="prose prose-invert prose-emerald mt-12 max-w-none">
       <Content />

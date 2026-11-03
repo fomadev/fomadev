@@ -13,6 +13,12 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
+
+const isFPL = project.data.license === 'FPL';
+const licenseLabel = isFPL ? 'Source-available' : 'Commercial';
+const licenseClass = isFPL
+  ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+  : 'bg-amber-500/10 border-amber-500/30 text-amber-400';
 ---
 
 <Layout
@@ -27,8 +33,8 @@ const { Content } = await render(project);
       <span class="rounded bg-zinc-800 px-2 py-1 text-xs text-zinc-300">
         {project.data.language}
       </span>
-      <span class="rounded bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 text-xs text-emerald-400">
-        Source-available
+      <span class={`rounded border px-2 py-1 text-xs ${licenseClass}`}>
+        {licenseLabel}
       </span>
     </div>
 
@@ -44,16 +50,17 @@ const { Content } = await render(project);
       </ul>
     )}
 
-    <!-- Actions : GitHub + Téléchargements -->
     <div class="mt-10 flex flex-wrap gap-3">
-      <a
-        href={project.data.githubUrl}
-        target="_blank"
-        rel="noopener"
-        class="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-medium text-zinc-950 hover:bg-emerald-400 transition-colors"
-      >
-        View on GitHub ↗
-      </a>
+      {project.data.githubUrl && (
+        <a
+          href={project.data.githubUrl}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-medium text-zinc-950 hover:bg-emerald-400 transition-colors"
+        >
+          View on GitHub ↗
+        </a>
+      )}
 
       {project.data.downloads && project.data.downloads.length > 0 && (
         project.data.downloads.map((dl) => (

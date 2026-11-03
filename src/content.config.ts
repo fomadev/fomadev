@@ -15,7 +15,10 @@ const projects = defineCollection({
     downloads: z.array(z.object({
       os: z.enum(['linux', 'windows', 'macos']),
       label: z.string(),
-      url: z.string().url(),
+      url: z.string().regex(
+        /^(https?:\/\/.+|\/.+)$/,
+        'Must be an http(s) URL or a path starting with /'
+      ),
     })).optional(),
   }),
 });

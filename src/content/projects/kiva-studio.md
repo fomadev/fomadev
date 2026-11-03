@@ -4,14 +4,22 @@ description: The graphical desktop client for KivaDB. Browse and edit data, run 
 language: Flutter
 order: 9
 featured: true
-tags: [gui, desktop, flutter, kivadb]
+tags: [gui, desktop, flutter, kivadb, early-access]
 license: FCL
+downloads:
+  - os: windows
+    label: Windows (x64) — Early Access
+    url: /downloads/kiva-studio-windows-x64.zip
 ---
 
 Kiva Studio is the graphical client for [KivaDB](https://github.com/fomadev/kiva-db).
 Connect to a database on your computer or on a remote server, browse and edit
 its data, run commands, manage users and watch the server's health. One code
 base for **Windows, Linux and macOS**, built with Flutter.
+
+> **Early Access.** Kiva Studio is fully functional and ready to use, but its
+> public versioning has not started yet. The current build is an early-access
+> release — features may evolve based on feedback.
 
 ## What you can do
 
@@ -38,8 +46,12 @@ Works with both **KivaDB 2.0** and **1.x**, adapting to the version the server a
 - **2.0**: workspaces grouped by project, `date`/`datetime`/`time` types, grant-based access, landing-workspace control.
 - **1.x**: flat workspace list, personal `u_<name>` workspace, the original seven types.
 
+## Platform support
+
+- **Windows** — available now (Early Access build below)
+- **Linux and macOS** — planned
+
 ## Distribution
 
 Kiva Studio is a commercial product distributed under the
-**Fordima Commercial License (FCL)**. Binary releases are provided per platform.
-The source code is not publicly available. Contact us to request access.
+**Fordima Commercial License (FCL)**. The source code is not publicly available.

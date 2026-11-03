@@ -6,6 +6,9 @@ order: 9
 featured: true
 tags: [gui, desktop, flutter, kivadb, early-access]
 license: FCL
+image:
+  src: /screenshots/kiva-studio-data.png
+  alt: Kiva Studio data browser showing a key-value workspace with editable values.
 downloads:
   - os: windows
     label: Windows (x64) — Early Access

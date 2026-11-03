@@ -11,6 +11,11 @@ const projects = defineCollection({
     order: z.number().optional(),
     featured: z.boolean().default(false),
     tags: z.array(z.string()).default([]),
+    downloads: z.array(z.object({
+      os: z.enum(['linux', 'windows', 'macos']),
+      label: z.string(),
+      url: z.string().url(),
+    })).optional(),
   }),
 });
 

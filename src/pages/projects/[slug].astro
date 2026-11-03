@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import DownloadButton from '../../components/DownloadButton.astro';
+import DownloadVersion from '../../components/DownloadVersion.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -20,8 +20,10 @@ const licenseClass = isFPL
   ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
   : 'bg-amber-500/10 border-amber-500/30 text-amber-400';
 
-const hasDownloads = project.data.downloads && project.data.downloads.length > 0;
-const showRequestAccess = !isFPL && !hasDownloads;
+const versions = project.data.downloads ?? [];
+const latestVersionId = project.data.latestVersion;
+const latest = versions.find((v) => v.version === latestVersionId);
+const older = versions.filter((v) => v.version !== latestVersionId);
 ---
 
 <Layout
@@ -64,7 +66,7 @@ const showRequestAccess = !isFPL && !hasDownloads;
       </figure>
     )}
 
-    <div class="mt-8 flex flex-wrap gap-3">
+    <div class="mt-10 flex flex-wrap gap-3">
       {project.data.githubUrl && (
         <a
           href={project.data.githubUrl}
@@ -75,22 +77,50 @@ const showRequestAccess = !isFPL && !hasDownloads;
           View on GitHub ↗
         </a>
       )}
-
-      {hasDownloads && project.data.downloads.map((dl) => (
-        <DownloadButton os={dl.os} label={dl.label} url={dl.url} />
-      ))}
-
-      {showRequestAccess && (
-        <a
-          href="mailto:contact@fomadev.com?subject=Kiva%20Studio%20access%20request"
-          class="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-5 py-2.5 text-sm font-medium text-zinc-950 hover:bg-amber-400 transition-colors"
-        >
-          Request access ↗
-        </a>
-      )}
     </div>
 
-    {project.data.downloads && project.data.downloads.length === 1 && project.data.downloads[0].os === 'windows' && (
+    {/* Section Téléchargements : Latest + historique */}
+    {versions.length > 0 && (
+      <div class="mt-12">
+        <h2 class="text-sm font-medium uppercase tracking-wider text-zinc-500">
+          Download
+        </h2>
+
+        {latest ? (
+          <div class="mt-4">
+            <DownloadVersion
+              version={latest.version}
+              date={latest.date}
+              files={latest.files}
+              isLatest={true}
+            />
+          </div>
+        ) : (
+          <p class="mt-3 text-sm text-zinc-500">
+            No latest version is marked for this project.
+          </p>
+        )}
+
+        {older.length > 0 && (
+          <div class="mt-6">
+            <h3 class="text-xs font-medium uppercase tracking-wider text-zinc-600">
+              Previous versions
+            </h3>
+            <div class="mt-3 space-y-3">
+              {older.map((v) => (
+                <DownloadVersion
+                  version={v.version}
+                  date={v.date}
+                  files={v.files}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    )}
+
+    {project.data.downloads && project.data.downloads.length === 1 && project.data.downloads[0].files.length === 1 && project.data.downloads[0].files[0].os === 'windows' && (
       <p class="mt-3 text-xs text-zinc-500">
         Linux and macOS builds are planned.
       </p>

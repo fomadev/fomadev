@@ -1,6 +1,15 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+const downloadFile = z.object({
+  os: z.enum(['linux', 'windows', 'macos']),
+  label: z.string(),
+  url: z.string().regex(
+    /^(https?:\/\/.+|\/.+)$/,
+    'Must be an http(s) URL or a path starting with /'
+  ),
+});
+
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: z.object({
@@ -16,13 +25,11 @@ const projects = defineCollection({
       src: z.string(),
       alt: z.string(),
     }).optional(),
+    latestVersion: z.string().optional(),
     downloads: z.array(z.object({
-      os: z.enum(['linux', 'windows', 'macos']),
-      label: z.string(),
-      url: z.string().regex(
-        /^(https?:\/\/.+|\/.+)$/,
-        'Must be an http(s) URL or a path starting with /'
-      ),
+      version: z.string(),
+      date: z.string().optional(),
+      files: z.array(downloadFile),
     })).optional(),
   }),
 });

@@ -51,7 +51,7 @@ Works with both **KivaDB 2.0** and **1.x**, adapting to the version the server a
 - **Windows** — available now (Early Access build below)
 - **Linux and macOS** — planned
 
-## Distribution
+## License
 
-Kiva Studio is a commercial product distributed under the
-**Fordima Commercial License (FCL)**. The source code is not publicly available.
+Kiva Studio is distributed under the Fordima Commercial License (FCL).
+The source code is not publicly available.

@@ -7,7 +7,6 @@ import ArrowUp from '../../components/icons/ArrowUp.astro';
 import ArrowUpRight from '../../components/icons/ArrowUpRight.astro';
 import GithubIcon from '../../components/icons/GithubIcon.astro';
 import ShieldIcon from '../../components/icons/ShieldIcon.astro';
-import SparklesIcon from '../../components/icons/SparklesIcon.astro';
 import DownloadIcon from '../../components/icons/DownloadIcon.astro';
 import { getCollection, render } from 'astro:content';
 
@@ -23,7 +22,7 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 
 const isFPL = project.data.license === 'FPL';
-const licenseLabel = isFPL ? 'Source-available (FPL)' : 'Commercial (FCL)';
+const licenseLabel = isFPL ? 'FPL · Source-available' : 'FCL · Commercial';
 const licenseBadgeClass = isFPL
   ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
   : 'bg-amber-500/10 border-amber-500/30 text-amber-400';
@@ -51,15 +50,15 @@ const hasOlder = older.length > 0;
   title={`${project.data.title} — FomaDev`}
   description={project.data.description}
 >
-  <article class="max-w-4xl mx-auto px-6 py-12 md:py-16">
-    <!-- Breadcrumb & Back -->
-    <nav class="flex items-center justify-between text-xs sm:text-sm text-zinc-400 mb-8 pb-6 border-b border-zinc-900">
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center justify-between text-xs text-zinc-400 mb-8 pb-4 border-b border-white/[0.07]">
       <a
         href="/#projects"
-        class="group inline-flex items-center gap-2 text-zinc-400 hover:text-emerald-400 transition-colors"
+        class="group inline-flex items-center gap-1.5 text-zinc-400 hover:text-white transition-colors font-medium"
       >
-        <ArrowLeft class="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-        <span>Back to all projects</span>
+        <ArrowLeft class="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+        <span>All projects</span>
       </a>
 
       <div class="hidden sm:flex items-center gap-2 text-zinc-500 font-mono text-xs">
@@ -72,54 +71,45 @@ const hasOlder = older.length > 0;
     </nav>
 
     <!-- Project Header -->
-    <header class="space-y-6">
-      <div class="flex flex-wrap items-center gap-2.5">
+    <header class="space-y-5">
+      <div class="flex flex-wrap items-center gap-2">
         <!-- Language Badge -->
-        <span class="inline-flex items-center gap-1.5 rounded-lg bg-zinc-800/80 border border-zinc-700/60 px-3 py-1 text-xs font-mono text-zinc-200">
+        <span class="inline-flex items-center gap-1.5 rounded bg-zinc-900 border border-zinc-800 px-2.5 py-1 text-xs font-mono text-zinc-300">
           <span class={`w-2 h-2 rounded-full ${langDotColor}`}></span>
           {project.data.language}
         </span>
 
-        <!-- License Badge with Link -->
+        <!-- License Badge -->
         <a
           href={`/license#${isFPL ? 'fpl' : 'fcl'}`}
-          class={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-mono font-medium transition-all ${licenseBadgeClass} hover:opacity-85`}
+          class={`inline-flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs font-mono font-medium transition-all ${licenseBadgeClass} hover:opacity-85`}
         >
-          <ShieldIcon class="w-3.5 h-3.5" />
+          <ShieldIcon class="w-3 h-3" />
           {licenseLabel}
         </a>
 
-        <!-- Latest Version Tag -->
         {project.data.latestVersion && (
-          <span class="inline-flex items-center gap-1 rounded-lg bg-zinc-900 border border-zinc-800 px-2.5 py-1 text-xs font-mono text-zinc-400">
+          <span class="inline-flex items-center rounded bg-zinc-900 border border-zinc-800 px-2.5 py-1 text-xs font-mono text-zinc-400">
             v{project.data.latestVersion}
-          </span>
-        )}
-
-        <!-- Featured Badge -->
-        {project.data.featured && (
-          <span class="inline-flex items-center gap-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-1 text-xs font-medium text-emerald-400">
-            <SparklesIcon class="w-3.5 h-3.5" />
-            Featured Project
           </span>
         )}
       </div>
 
       <!-- Main Title -->
-      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
         {project.data.title}
       </h1>
 
       <!-- Description -->
-      <p class="text-lg sm:text-xl text-zinc-300 leading-relaxed max-w-3xl font-normal">
+      <p class="text-base sm:text-lg text-zinc-300 leading-relaxed max-w-3xl">
         {project.data.description}
       </p>
 
       <!-- Tags -->
       {project.data.tags.length > 0 && (
-        <ul class="flex flex-wrap gap-2 pt-1">
+        <ul class="flex flex-wrap gap-1.5 pt-1">
           {project.data.tags.map((t) => (
-            <li class="rounded-lg border border-zinc-800/90 bg-zinc-900/60 px-3 py-1 text-xs font-mono text-zinc-400">
+            <li class="rounded border border-white/[0.06] bg-zinc-900/80 px-2 py-0.5 text-xs font-mono text-zinc-400">
               #{t}
             </li>
           ))}
@@ -133,42 +123,42 @@ const hasOlder = older.length > 0;
             href={project.data.githubUrl}
             target="_blank"
             rel="noopener"
-            class="group inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-zinc-950 shadow-[0_4px_20px_-4px_rgba(16,185,129,0.35)] hover:bg-emerald-400 transition-all"
+            class="group inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-blue-500 transition-all shadow-sm"
           >
-            <GithubIcon class="w-4 h-4 text-zinc-950" />
-            <span>View on GitHub</span>
-            <ArrowUpRight class="w-3.5 h-3.5 text-zinc-950 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <GithubIcon class="w-4 h-4" />
+            <span>Repository on GitHub</span>
+            <ArrowUpRight class="w-3.5 h-3.5 text-blue-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         )}
 
         {versions.length > 0 && (
           <a
             href="#downloads"
-            class="inline-flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900 px-5 py-2.5 text-sm font-medium text-zinc-200 hover:border-zinc-700 hover:bg-zinc-850 hover:text-white transition-all"
+            class="inline-flex items-center gap-2 rounded-lg border border-white/[0.08] bg-zinc-900 px-4 py-2 text-xs sm:text-sm font-medium text-zinc-300 hover:text-white hover:border-zinc-700 transition-all"
           >
-            <DownloadIcon class="w-4 h-4 text-emerald-400" />
+            <DownloadIcon class="w-4 h-4 text-zinc-400" />
             <span>Downloads ({versions.length})</span>
-            <ArrowDown class="w-3.5 h-3.5 text-zinc-500" />
+            <ArrowDown class="w-3 h-3 text-zinc-500" />
           </a>
         )}
       </div>
     </header>
 
-    <!-- App / Project Image Showcase with Window Mockup -->
+    <!-- App / Project Image Showcase -->
     {project.data.image && (
-      <figure class="mt-12 group">
-        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/90 shadow-2xl overflow-hidden">
+      <figure class="mt-12">
+        <div class="rounded-xl border border-white/[0.08] bg-[#0c0e14] overflow-hidden shadow-xl">
           <!-- Window Titlebar -->
-          <div class="h-9 px-4 bg-zinc-950/80 border-b border-zinc-800/80 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-zinc-700/60"></span>
-              <span class="w-3 h-3 rounded-full bg-zinc-700/60"></span>
-              <span class="w-3 h-3 rounded-full bg-zinc-700/60"></span>
+          <div class="h-8 px-4 bg-zinc-900/80 border-b border-zinc-800 flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-zinc-700"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-zinc-700"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-zinc-700"></span>
             </div>
-            <span class="text-xs font-mono text-zinc-500 truncate max-w-xs">
+            <span class="text-xs font-mono text-zinc-500">
               {project.data.title}
             </span>
-            <div class="w-12"></div>
+            <div class="w-10"></div>
           </div>
           <!-- Image -->
           <img
@@ -183,10 +173,10 @@ const hasOlder = older.length > 0;
 
     <!-- Downloads Section (Latest) -->
     {versions.length > 0 && (
-      <section id="downloads" class="mt-14 pt-10 border-t border-zinc-900 scroll-mt-24">
+      <section id="downloads" class="mt-12 pt-8 border-t border-white/[0.07] scroll-mt-20">
         <div class="flex items-center justify-between mb-4">
           <div class="flex items-center gap-2">
-            <DownloadIcon class="w-4 h-4 text-emerald-400" />
+            <DownloadIcon class="w-4 h-4 text-zinc-400" />
             <h2 class="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400">
               Downloads & Binaries
             </h2>
@@ -194,7 +184,7 @@ const hasOlder = older.length > 0;
           {hasOlder && (
             <a
               href="#all-versions"
-              class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
+              class="inline-flex items-center gap-1 text-xs font-medium text-blue-400 hover:text-blue-300 transition-colors"
             >
               <span>See older versions ({older.length})</span>
               <ArrowDown class="w-3 h-3" />
@@ -218,17 +208,17 @@ const hasOlder = older.length > 0;
     )}
 
     <!-- Markdown Documentation Body -->
-    <div class="prose prose-invert prose-emerald mt-14 max-w-none border-t border-zinc-900 pt-10">
+    <div class="prose prose-invert prose-zinc mt-12 max-w-none border-t border-white/[0.07] pt-8">
       <Content />
     </div>
 
-    <!-- All Older Versions Section -->
+    <!-- Older Versions Section -->
     {hasOlder && (
       <section
         id="all-versions"
-        class="mt-20 pt-10 border-t border-zinc-800 scroll-mt-24"
+        class="mt-16 pt-8 border-t border-white/[0.07] scroll-mt-20"
       >
-        <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center justify-between mb-5">
           <div class="flex items-center gap-2">
             <DownloadIcon class="w-4 h-4 text-zinc-400" />
             <h2 class="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400">
@@ -237,14 +227,14 @@ const hasOlder = older.length > 0;
           </div>
           <a
             href="#top"
-            class="inline-flex items-center gap-1 text-xs font-medium text-zinc-500 hover:text-emerald-400 transition-colors"
+            class="inline-flex items-center gap-1 text-xs font-medium text-zinc-500 hover:text-white transition-colors"
           >
             <span>Back to top</span>
             <ArrowUp class="w-3 h-3" />
           </a>
         </div>
 
-        <div class="space-y-4">
+        <div class="space-y-3">
           {older.map((v) => (
             <DownloadVersion
               version={v.version}
@@ -256,18 +246,18 @@ const hasOlder = older.length > 0;
       </section>
     )}
 
-    <!-- Bottom Project Footer Card -->
-    <footer class="mt-20 pt-8 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-400">
+    <!-- Bottom Navigation -->
+    <footer class="mt-16 pt-6 border-t border-white/[0.07] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
       <a
         href="/#projects"
-        class="inline-flex items-center gap-2 text-zinc-300 hover:text-emerald-400 transition-colors"
+        class="inline-flex items-center gap-1.5 text-zinc-300 hover:text-white transition-colors"
       >
-        <ArrowLeft class="w-4 h-4" />
+        <ArrowLeft class="w-3.5 h-3.5" />
         <span>Return to all projects</span>
       </a>
 
-      <div class="flex items-center gap-4 text-xs font-mono">
-        <a href="/license" class="hover:text-emerald-400 transition-colors">
+      <div class="flex items-center gap-4 text-zinc-500 font-mono">
+        <a href="/license" class="hover:text-zinc-300 transition-colors">
           Licensing overview
         </a>
         <span>·</span>

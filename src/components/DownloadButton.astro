@@ -15,11 +15,11 @@ const { os, label, url } = Astro.props;
   href={url}
   target="_blank"
   rel="noopener"
-  class="group inline-flex items-center gap-2.5 rounded-xl border border-zinc-800 bg-zinc-900/90 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:border-emerald-500/50 hover:bg-zinc-850 hover:text-emerald-400 shadow-sm hover:shadow-[0_4px_20px_-4px_rgba(16,185,129,0.2)] transition-all duration-200"
+  class="group inline-flex items-center gap-2.5 rounded-lg border border-white/[0.08] bg-zinc-900/90 px-4 py-2 text-xs sm:text-sm font-medium text-zinc-200 hover:border-blue-500/50 hover:bg-zinc-850 hover:text-white transition-all shadow-sm"
 >
-  <span class="text-zinc-400 group-hover:text-emerald-400 transition-colors">
+  <span class="text-zinc-400 group-hover:text-blue-400 transition-colors">
     <OsIcon os={os} class="w-4 h-4" />
   </span>
   <span>{label}</span>
-  <DownloadIcon class="w-3.5 h-3.5 text-zinc-500 group-hover:text-emerald-400 group-hover:translate-y-0.5 transition-all duration-200 ml-auto" />
+  <DownloadIcon class="w-3.5 h-3.5 text-zinc-500 group-hover:text-blue-400 group-hover:translate-y-0.5 transition-all ml-auto" />
 </a>

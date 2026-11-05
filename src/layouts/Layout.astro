@@ -8,65 +8,76 @@ import ArrowUp from '../components/icons/ArrowUp.astro';
 interface Props {
   title?: string;
   description?: string;
+  activePath?: string;
 }
 
 const {
   title = 'FomaDev — Source-available software',
   description = 'Source-available tools for performance-minded developers. Built in C, Rust, and TypeScript.',
+  activePath = Astro.url.pathname,
 } = Astro.props;
 
 const currentYear = new Date().getFullYear();
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth bg-[#090a0f] text-zinc-100">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#090a0f" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen flex flex-col bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-blue-500/20 selection:text-blue-300 relative overflow-x-hidden">
-    <!-- Ambient Background Lighting -->
-    <div class="pointer-events-none fixed inset-0 -z-10 flex justify-center">
-      <div class="h-[500px] w-full max-w-7xl bg-gradient-to-b from-blue-600/10 via-emerald-500/[0.02] to-transparent blur-3xl opacity-75"></div>
-    </div>
-    <div class="pointer-events-none fixed inset-0 -z-10 bg-grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,white_10%,transparent_70%)]"></div>
+  <body class="min-h-screen flex flex-col font-sans antialiased selection:bg-blue-600/30 selection:text-blue-200 relative overflow-x-hidden bg-[#090a0f]">
+    <!-- Ambient Engineering Texture -->
+    <div class="pointer-events-none fixed inset-0 -z-10 dev-grid opacity-30"></div>
+    <div class="pointer-events-none fixed inset-x-0 top-0 h-96 -z-10 bg-gradient-to-b from-blue-950/20 via-zinc-950/10 to-transparent"></div>
 
     <!-- Navigation Header -->
-    <header class="sticky top-0 z-50 backdrop-blur-xl bg-zinc-950/80 border-b border-zinc-800/80 transition-colors">
-      <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="/" class="group flex items-center gap-3">
-          <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/15 via-zinc-900 to-zinc-900 border border-blue-500/30 shadow-[0_0_15px_rgba(37,99,235,0.15)] group-hover:border-blue-400/60 group-hover:shadow-[0_0_24px_rgba(59,130,246,0.35)] transition-all duration-300">
-            <FomaLogo class="w-6 h-6 transition-transform duration-300 group-hover:scale-105" gradient={true} />
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-[#090a0f]/85 border-b border-white/[0.07] transition-all">
+      <nav class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+        <!-- Logo / Brand Link -->
+        <a href="/" class="group flex items-center gap-3 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg p-1">
+          <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/25 p-1 flex items-center justify-center transition-all group-hover:border-blue-400 group-hover:bg-blue-500/15">
+            <FomaLogo class="w-full h-full text-blue-500 group-hover:text-blue-400" gradient={true} />
           </div>
-          <div class="flex flex-col">
-            <span class="font-bold tracking-tight text-white group-hover:text-blue-400 transition-colors text-lg flex items-center gap-2">
+          <div class="flex items-center gap-2">
+            <span class="font-bold tracking-tight text-white group-hover:text-blue-400 transition-colors text-base">
               FomaDev
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono font-medium tracking-normal bg-blue-500/10 text-blue-400 border border-blue-500/25">
-                OSS
-              </span>
+            </span>
+            <span class="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-zinc-900 text-zinc-400 border border-zinc-800">
+              ecosystem
             </span>
           </div>
         </a>
 
+        <!-- Center Nav Links -->
         <div class="flex items-center gap-1 sm:gap-2">
           <a
             href="/#projects"
-            class="px-3 py-1.5 text-sm font-medium text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/60 rounded-lg transition-colors"
+            class={`px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors ${
+              activePath === '/' || activePath === '/#projects'
+                ? 'text-white bg-zinc-900/90'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'
+            }`}
           >
             Projects
           </a>
           <a
             href="/license"
-            class="px-3 py-1.5 text-sm font-medium text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/60 rounded-lg transition-colors"
+            class={`px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors ${
+              activePath === '/license' || activePath.startsWith('/license')
+                ? 'text-white bg-zinc-900/90'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'
+            }`}
           >
             Licensing
           </a>
@@ -75,12 +86,12 @@ const currentYear = new Date().getFullYear();
             href="https://github.com/fomadev"
             target="_blank"
             rel="noopener"
-            class="inline-flex items-center gap-2 px-3.5 py-1.5 text-sm font-medium rounded-lg border border-zinc-800 bg-zinc-900/70 text-zinc-300 hover:text-zinc-100 hover:bg-zinc-850 hover:border-zinc-700 shadow-sm transition-all"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg border border-white/[0.08] bg-zinc-900/80 text-zinc-300 hover:text-white hover:border-zinc-700 hover:bg-zinc-800/80 transition-all shadow-sm"
             aria-label="GitHub organization"
           >
-            <GithubIcon class="w-4 h-4 text-zinc-400 group-hover:text-zinc-200" />
-            <span class="hidden sm:inline">GitHub</span>
-            <ArrowUpRight class="w-3.5 h-3.5 text-zinc-500" />
+            <GithubIcon class="w-3.5 h-3.5" />
+            <span class="hidden md:inline">GitHub</span>
+            <ArrowUpRight class="w-3 h-3 text-zinc-500" />
           </a>
         </div>
       </nav>
@@ -91,51 +102,88 @@ const currentYear = new Date().getFullYear();
       <slot />
     </main>
 
-    <!-- Modern Footer -->
-    <footer class="border-t border-zinc-800/80 bg-zinc-950/60 backdrop-blur-sm mt-24">
-      <div class="max-w-6xl mx-auto px-6 py-12">
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-10 border-b border-zinc-900">
-          <div class="space-y-3 max-w-md">
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 p-1 flex items-center justify-center">
-                <FomaLogo class="w-5 h-5" gradient={true} />
+    <!-- Footer -->
+    <footer class="border-t border-white/[0.07] bg-[#07080c] mt-28">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-zinc-900">
+          <!-- Col 1: Brand & Philosophy -->
+          <div class="md:col-span-5 space-y-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-md bg-blue-500/10 border border-blue-500/20 p-1 flex items-center justify-center">
+                <FomaLogo class="w-full h-full" gradient={true} />
               </div>
-              <span class="font-bold tracking-tight text-white text-lg">FomaDev</span>
+              <span class="font-bold tracking-tight text-white text-base">FomaDev</span>
               <span class="text-xs text-zinc-500 font-mono">by Fordima Inc.</span>
             </div>
-            <p class="text-sm text-zinc-400 leading-relaxed">
-              Source-available tools for performance-minded developers. Built with precision in C, Rust, and TypeScript.
+            <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-sm">
+              Source-available systems software and developer tools built in C, Rust, and TypeScript. Engineered for performance, simplicity, and low-latency environments.
             </p>
           </div>
 
-          <div class="flex flex-wrap items-center gap-6 text-sm">
-            <a href="/" class="text-zinc-400 hover:text-blue-400 transition-colors">
-              Home
-            </a>
-            <a href="/#projects" class="text-zinc-400 hover:text-blue-400 transition-colors">
-              Projects
-            </a>
-            <a href="/license" class="text-zinc-400 hover:text-blue-400 transition-colors">
-              Licensing (FPL & FCL)
-            </a>
-            <a
-              href="https://github.com/fomadev"
-              target="_blank"
-              rel="noopener"
-              class="inline-flex items-center gap-1.5 text-zinc-400 hover:text-zinc-100 transition-colors"
-            >
-              <GithubIcon class="w-3.5 h-3.5" />
-              GitHub
-              <ArrowUpRight class="w-3 h-3 text-zinc-500" />
-            </a>
+          <!-- Col 2: Navigation Links -->
+          <div class="md:col-span-3 space-y-3">
+            <h4 class="text-xs font-semibold uppercase tracking-wider text-zinc-300 font-mono">
+              Ecosystem
+            </h4>
+            <ul class="space-y-2 text-xs sm:text-sm text-zinc-400">
+              <li>
+                <a href="/#projects" class="hover:text-blue-400 transition-colors">
+                  All Projects
+                </a>
+              </li>
+              <li>
+                <a href="/#flagship" class="hover:text-blue-400 transition-colors">
+                  Featured Systems
+                </a>
+              </li>
+              <li>
+                <a href="/license#fpl" class="hover:text-blue-400 transition-colors">
+                  Fordima Public License (FPL)
+                </a>
+              </li>
+              <li>
+                <a href="/license#fcl" class="hover:text-blue-400 transition-colors">
+                  Fordima Commercial License (FCL)
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Repositories & Legal -->
+          <div class="md:col-span-4 space-y-3">
+            <h4 class="text-xs font-semibold uppercase tracking-wider text-zinc-300 font-mono">
+              Organization
+            </h4>
+            <ul class="space-y-2 text-xs sm:text-sm text-zinc-400">
+              <li>
+                <a
+                  href="https://github.com/fomadev"
+                  target="_blank"
+                  rel="noopener"
+                  class="inline-flex items-center gap-1.5 hover:text-white transition-colors"
+                >
+                  <GithubIcon class="w-3.5 h-3.5" />
+                  GitHub @fomadev
+                  <ArrowUpRight class="w-3 h-3 text-zinc-500" />
+                </a>
+              </li>
+              <li>
+                <a href="/license" class="hover:text-blue-400 transition-colors">
+                  Licensing Terms & Agreements
+                </a>
+              </li>
+              <li>
+                <span class="text-zinc-500">Parent Organization: Fordima Inc.</span>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
-          <p>© {currentYear} FomaDev · A Fordima Inc. initiative.</p>
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+          <p>© {currentYear} FomaDev · Subsidiary of Fordima Inc. All rights reserved.</p>
           <a
             href="#top"
-            class="inline-flex items-center gap-1 text-zinc-500 hover:text-blue-400 transition-colors"
+            class="inline-flex items-center gap-1 text-zinc-500 hover:text-blue-400 transition-colors font-medium"
           >
             <span>Back to top</span>
             <ArrowUp class="w-3 h-3" />

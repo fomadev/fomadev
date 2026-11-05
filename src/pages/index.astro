@@ -9,6 +9,7 @@ import SparklesIcon from '../components/icons/SparklesIcon.astro';
 import SearchIcon from '../components/icons/SearchIcon.astro';
 import OsIcon from '../components/icons/OsIcon.astro';
 import GithubIcon from '../components/icons/GithubIcon.astro';
+import FomaLogo from '../components/icons/FomaLogo.astro';
 
 const projects = (await getCollection('projects'))
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
@@ -31,12 +32,10 @@ const uniqueLanguages = Array.from(new Set(projects.map((p) => p.data.language))
   <section class="relative pt-20 pb-16 md:pt-28 md:pb-24 border-b border-zinc-900/80">
     <div class="max-w-6xl mx-auto px-6">
       <div class="max-w-3xl">
-        <!-- Status Pill -->
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.15)] mb-6">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
+        <!-- Status Pill with Brand Icon -->
+        <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-xs font-medium border border-blue-500/30 bg-blue-500/10 text-blue-300 shadow-[0_0_20px_rgba(59,130,246,0.2)] mb-6">
+          <FomaLogo class="w-4 h-4 shrink-0" gradient={true} />
+          <span class="w-1 h-1 rounded-full bg-blue-400"></span>
           <span>Source-available high performance software</span>
         </div>
 
@@ -304,8 +303,11 @@ const uniqueLanguages = Array.from(new Set(projects.map((p) => p.data.language))
       <div class="pointer-events-none absolute -right-20 -top-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl"></div>
 
       <div class="max-w-2xl">
-        <span class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">Dual Licensing Model</span>
-        <h2 class="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-white">
+        <div class="flex items-center gap-2 mb-2">
+          <FomaLogo class="w-4 h-4" gradient={true} />
+          <span class="text-xs font-mono uppercase tracking-wider text-blue-400 font-semibold">Dual Licensing Model</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">
           Clear, balanced licensing designed for builders
         </h2>
         <p class="mt-3 text-sm sm:text-base text-zinc-400 leading-relaxed">

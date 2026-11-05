@@ -5,6 +5,7 @@ import ArrowUpRight from '../components/icons/ArrowUpRight.astro';
 import ShieldIcon from '../components/icons/ShieldIcon.astro';
 import CheckIcon from '../components/icons/CheckIcon.astro';
 import XIcon from '../components/icons/XIcon.astro';
+import FomaLogo from '../components/icons/FomaLogo.astro';
 ---
 
 <Layout
@@ -306,12 +307,17 @@ import XIcon from '../components/icons/XIcon.astro';
     </div>
 
     <!-- Commercial License Inquiry Box -->
-    <div class="mt-16 rounded-2xl border border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-950 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-      <div>
-        <h3 class="text-base sm:text-lg font-bold text-white">Need a Commercial License?</h3>
-        <p class="text-xs sm:text-sm text-zinc-400 mt-1 max-w-xl">
-          To obtain a commercial license, discuss enterprise agreements or request custom terms, contact the management team at Fordima Inc.
-        </p>
+    <div class="mt-16 rounded-2xl border border-zinc-800 bg-gradient-to-r from-zinc-900 via-zinc-900 to-zinc-950 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div class="flex items-start gap-4">
+        <div class="w-11 h-11 rounded-xl bg-blue-500/10 border border-blue-500/25 p-2 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(37,99,235,0.15)]">
+          <FomaLogo class="w-6 h-6" gradient={true} />
+        </div>
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-white">Need a Commercial License?</h3>
+          <p class="text-xs sm:text-sm text-zinc-400 mt-1 max-w-xl">
+            To obtain a commercial license, discuss enterprise agreements or request custom terms, contact the management team at Fordima Inc.
+          </p>
+        </div>
       </div>
       <a
         href="https://github.com/fomadev"

@@ -12,6 +12,7 @@ image:
 latestVersion: "0.1.0"
 downloads:
   - version: "0.1.0"
+    date: "2026-11-01"
     files:
       - os: windows
         label: Windows (x64) — Early Access
@@ -25,7 +26,8 @@ base for **Windows, Linux and macOS**, built with Flutter.
 
 > **Early Access.** Kiva Studio is fully functional and ready to use, but its
 > public versioning has not started yet. The current build is an early-access
-> release — features may evolve based on feedback.
+> release — **free to download and use**, and features may evolve based on
+> feedback.
 
 ## What you can do
 
@@ -59,5 +61,6 @@ Works with both **KivaDB 2.0** and **1.x**, adapting to the version the server a
 
 ## License
 
-Kiva Studio is distributed under the Fordima Commercial License (FCL).
-The source code is not publicly available.
+Kiva Studio is distributed under the **Fordima Commercial License (FCL)**.
+The source code is not publicly available. During Early Access, the Windows
+build is free to download and use.

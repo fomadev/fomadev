@@ -1,5 +1,9 @@
 ---
 import '../styles/global.css';
+import FomaLogo from '../components/icons/FomaLogo.astro';
+import GithubIcon from '../components/icons/GithubIcon.astro';
+import ArrowUpRight from '../components/icons/ArrowUpRight.astro';
+import ArrowUp from '../components/icons/ArrowUp.astro';
 
 interface Props {
   title?: string;
@@ -10,40 +14,131 @@ const {
   title = 'FomaDev — Source-available software',
   description = 'Source-available tools for performance-minded developers. Built in C, Rust, and TypeScript.',
 } = Astro.props;
+
+const currentYear = new Date().getFullYear();
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen flex flex-col bg-zinc-950 text-zinc-100 font-sans antialiased">
-    <header class="border-b border-zinc-800">
-      <nav class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="/" class="font-semibold tracking-tight hover:text-emerald-400 transition-colors">
-          FomaDev
+  <body class="min-h-screen flex flex-col bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-emerald-500/20 selection:text-emerald-300 relative overflow-x-hidden">
+    <!-- Ambient Background Lighting -->
+    <div class="pointer-events-none fixed inset-0 -z-10 flex justify-center">
+      <div class="h-[500px] w-full max-w-7xl bg-gradient-to-b from-emerald-500/10 via-emerald-500/[0.02] to-transparent blur-3xl opacity-70"></div>
+    </div>
+    <div class="pointer-events-none fixed inset-0 -z-10 bg-grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,white_10%,transparent_70%)]"></div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 backdrop-blur-xl bg-zinc-950/75 border-b border-zinc-800/80 transition-colors">
+      <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="/" class="group flex items-center gap-3">
+          <div class="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700/60 shadow-inner group-hover:border-emerald-500/50 group-hover:shadow-[0_0_16px_rgba(16,185,129,0.25)] transition-all duration-300">
+            <FomaLogo class="w-5 h-5 text-emerald-400 transition-transform duration-300 group-hover:scale-110" />
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold tracking-tight text-zinc-100 group-hover:text-emerald-400 transition-colors text-base flex items-center gap-1.5">
+              FomaDev
+              <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-mono font-medium tracking-normal bg-zinc-800/80 text-zinc-400 border border-zinc-700/50">
+                OSS
+              </span>
+            </span>
+          </div>
         </a>
-        <a
-          href="https://github.com/fomadev"
-          target="_blank"
-          rel="noopener"
-          class="text-sm text-zinc-400 hover:text-zinc-100 transition-colors"
-        >
-          GitHub ↗
-        </a>
+
+        <div class="flex items-center gap-1 sm:gap-2">
+          <a
+            href="/#projects"
+            class="px-3 py-1.5 text-sm font-medium text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/60 rounded-lg transition-colors"
+          >
+            Projects
+          </a>
+          <a
+            href="/license"
+            class="px-3 py-1.5 text-sm font-medium text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/60 rounded-lg transition-colors"
+          >
+            Licensing
+          </a>
+          <div class="h-4 w-px bg-zinc-800 mx-1 sm:mx-2"></div>
+          <a
+            href="https://github.com/fomadev"
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg border border-zinc-800 bg-zinc-900/70 text-zinc-300 hover:text-zinc-100 hover:bg-zinc-850 hover:border-zinc-700 shadow-sm transition-all"
+            aria-label="GitHub organization"
+          >
+            <GithubIcon class="w-4 h-4 text-zinc-400 group-hover:text-zinc-200" />
+            <span class="hidden sm:inline">GitHub</span>
+            <ArrowUpRight class="w-3.5 h-3.5 text-zinc-500" />
+          </a>
+        </div>
       </nav>
     </header>
 
-    <main class="flex-1">
+    <!-- Main Content -->
+    <main class="flex-1 relative z-10">
       <slot />
     </main>
 
-    <footer class="border-t border-zinc-800 mt-20">
-      <div class="max-w-5xl mx-auto px-6 py-8 text-sm text-zinc-500 flex flex-wrap justify-between gap-2">
-        <span>© {new Date().getFullYear()} FomaDev</span>
+    <!-- Modern Footer -->
+    <footer class="border-t border-zinc-800/80 bg-zinc-950/60 backdrop-blur-sm mt-24">
+      <div class="max-w-6xl mx-auto px-6 py-12">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-10 border-b border-zinc-900">
+          <div class="space-y-2 max-w-md">
+            <div class="flex items-center gap-2.5">
+              <FomaLogo class="w-5 h-5 text-emerald-400" />
+              <span class="font-bold tracking-tight text-zinc-100">FomaDev</span>
+              <span class="text-xs text-zinc-500 font-mono">by Fordima Inc.</span>
+            </div>
+            <p class="text-sm text-zinc-400 leading-relaxed">
+              Source-available tools for performance-minded developers. Built with precision in C, Rust, and TypeScript.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-6 text-sm">
+            <a href="/" class="text-zinc-400 hover:text-emerald-400 transition-colors">
+              Home
+            </a>
+            <a href="/#projects" class="text-zinc-400 hover:text-emerald-400 transition-colors">
+              Projects
+            </a>
+            <a href="/license" class="text-zinc-400 hover:text-emerald-400 transition-colors">
+              Licensing (FPL & FCL)
+            </a>
+            <a
+              href="https://github.com/fomadev"
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-1.5 text-zinc-400 hover:text-zinc-100 transition-colors"
+            >
+              <GithubIcon class="w-3.5 h-3.5" />
+              GitHub
+              <ArrowUpRight class="w-3 h-3 text-zinc-500" />
+            </a>
+          </div>
+        </div>
+
+        <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+          <p>© {currentYear} FomaDev · A Fordima Inc. initiative.</p>
+          <a
+            href="#top"
+            class="inline-flex items-center gap-1 text-zinc-500 hover:text-emerald-400 transition-colors"
+          >
+            <span>Back to top</span>
+            <ArrowUp class="w-3 h-3" />
+          </a>
+        </div>
       </div>
     </footer>
   </body>

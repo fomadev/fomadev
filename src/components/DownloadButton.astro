@@ -1,4 +1,7 @@
 ---
+import OsIcon from './icons/OsIcon.astro';
+import DownloadIcon from './icons/DownloadIcon.astro';
+
 interface Props {
   os: 'linux' | 'windows' | 'macos';
   label: string;
@@ -6,21 +9,17 @@ interface Props {
 }
 
 const { os, label, url } = Astro.props;
-
-const icons = {
-  linux: '🐧',
-  windows: '🪟',
-  macos: '🍎',
-};
 ---
 
 <a
   href={url}
   target="_blank"
   rel="noopener"
-  class="group inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-sm text-zinc-200 hover:border-emerald-500/50 hover:text-emerald-400 transition-colors"
+  class="group inline-flex items-center gap-2.5 rounded-xl border border-zinc-800 bg-zinc-900/90 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:border-emerald-500/50 hover:bg-zinc-850 hover:text-emerald-400 shadow-sm hover:shadow-[0_4px_20px_-4px_rgba(16,185,129,0.2)] transition-all duration-200"
 >
-  <span class="text-base">{icons[os]}</span>
+  <span class="text-zinc-400 group-hover:text-emerald-400 transition-colors">
+    <OsIcon os={os} class="w-4 h-4" />
+  </span>
   <span>{label}</span>
-  <span class="text-zinc-600 group-hover:text-emerald-400 transition-colors">↓</span>
+  <DownloadIcon class="w-3.5 h-3.5 text-zinc-500 group-hover:text-emerald-400 group-hover:translate-y-0.5 transition-all duration-200 ml-auto" />
 </a>

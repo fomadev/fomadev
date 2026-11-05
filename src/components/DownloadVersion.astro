@@ -1,4 +1,9 @@
 ---
+import OsIcon from './icons/OsIcon.astro';
+import DownloadIcon from './icons/DownloadIcon.astro';
+import CalendarIcon from './icons/CalendarIcon.astro';
+import SparklesIcon from './icons/SparklesIcon.astro';
+
 interface DownloadFile {
   os: 'linux' | 'windows' | 'macos' | 'universal';
   label: string;
@@ -13,41 +18,55 @@ interface Props {
 }
 
 const { version, date, files, isLatest = false } = Astro.props;
-
-const icons = {
-  linux: '🐧',
-  windows: '🪟',
-  macos: '🍎',
-  universal: '📦',
-};
 ---
 
-<div class={`rounded-xl border p-5 ${isLatest ? 'border-emerald-500/40 bg-emerald-500/5' : 'border-zinc-800 bg-zinc-900'}`}>
-  <div class="flex flex-wrap items-center justify-between gap-2">
-    <div class="flex items-center gap-2">
-      <span class={`font-mono text-sm font-semibold ${isLatest ? 'text-emerald-400' : 'text-zinc-200'}`}>
+<div
+  class={`relative rounded-2xl border p-5 sm:p-6 transition-all duration-300 ${
+    isLatest
+      ? 'border-emerald-500/30 bg-gradient-to-b from-emerald-500/[0.08] via-zinc-900/90 to-zinc-900 shadow-[0_8px_30px_rgb(0,0,0,0.12)]'
+      : 'border-zinc-800/80 bg-zinc-900/60 hover:border-zinc-700/80'
+  }`}
+>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-2.5">
+      <span class="inline-flex items-center gap-1.5 font-mono text-sm sm:text-base font-semibold text-zinc-100">
         v{version}
       </span>
       {isLatest && (
-        <span class="rounded bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] uppercase tracking-wider text-emerald-400">
-          Latest
+        <span class="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 text-[11px] font-medium tracking-wide text-emerald-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          Latest Release
         </span>
       )}
     </div>
-    {date && <span class="text-xs text-zinc-500">{date}</span>}
+
+    {date && (
+      <span class="inline-flex items-center gap-1.5 text-xs text-zinc-400 font-mono">
+        <CalendarIcon class="w-3.5 h-3.5 text-zinc-500" />
+        {date}
+      </span>
+    )}
   </div>
 
-  <div class="mt-4 flex flex-wrap gap-2">
+  <div class="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
     {files.map((file) => (
       <a
         href={file.url}
         target="_blank"
         rel="noopener"
-        class="group inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3.5 py-2 text-xs text-zinc-300 hover:border-emerald-500/50 hover:text-emerald-400 transition-colors"
+        class={`group flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-xs font-medium transition-all duration-200 ${
+          isLatest
+            ? 'border-emerald-500/20 bg-zinc-950/70 hover:border-emerald-500/60 hover:bg-zinc-900 text-zinc-200 hover:text-white shadow-sm'
+            : 'border-zinc-800 bg-zinc-950/60 hover:border-zinc-700 hover:bg-zinc-900 text-zinc-300 hover:text-zinc-100'
+        }`}
       >
-        <span class="text-sm">{icons[file.os]}</span>
-        <span>{file.label}</span>
-        <span class="text-zinc-600 group-hover:text-emerald-400 transition-colors">↓</span>
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span class="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800/80 text-zinc-300 group-hover:text-emerald-400 group-hover:border-emerald-500/30 transition-colors">
+            <OsIcon os={file.os} class="w-4 h-4" />
+          </span>
+          <span class="truncate">{file.label}</span>
+        </div>
+        <DownloadIcon class="w-4 h-4 shrink-0 text-zinc-500 group-hover:text-emerald-400 group-hover:translate-y-0.5 transition-all" />
       </a>
     ))}
   </div>

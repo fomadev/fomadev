@@ -1,31 +1,210 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ArrowLeft from '../components/icons/ArrowLeft.astro';
+import ArrowUpRight from '../components/icons/ArrowUpRight.astro';
+import ShieldIcon from '../components/icons/ShieldIcon.astro';
+import CheckIcon from '../components/icons/CheckIcon.astro';
+import XIcon from '../components/icons/XIcon.astro';
 ---
 
 <Layout
   title="Licensing — FomaDev"
   description="FomaDev projects are released under one of two licenses: the Fordima Public License (FPL) or the Fordima Commercial License (FCL)."
 >
-  <article class="max-w-3xl mx-auto px-6 py-16">
-    <a href="/" class="text-sm text-zinc-500 hover:text-zinc-300">← All projects</a>
+  <article class="max-w-4xl mx-auto px-6 py-12 md:py-16">
+    <!-- Back Link -->
+    <nav class="mb-8 pb-6 border-b border-zinc-900">
+      <a
+        href="/#projects"
+        class="group inline-flex items-center gap-2 text-xs sm:text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+      >
+        <ArrowLeft class="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+        <span>Back to all projects</span>
+      </a>
+    </nav>
 
-    <div class="prose prose-invert prose-emerald mt-8 max-w-none">
-      <h1>Licensing</h1>
+    <!-- Header Section -->
+    <header class="max-w-3xl">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 mb-6">
+        <ShieldIcon class="w-3.5 h-3.5" />
+        <span>Fordima Licensing Framework</span>
+      </div>
 
-      <p>
-        Everything built within the Fordima ecosystem is released under one of
-        two licenses. They share one idea: <strong>people should be free to use
-        our software, and the work behind it should stay protected.</strong>
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+        Licensing in the Fordima Ecosystem
+      </h1>
+
+      <p class="mt-4 text-base sm:text-lg text-zinc-400 leading-relaxed">
+        Everything built within the Fordima ecosystem is released under one of two licenses. They share one core philosophy: <strong class="text-zinc-200">people should be free to use our software, and the work behind it should stay protected.</strong>
       </p>
 
-      <p>
-        Fordima Inc. is the parent company. Its subsidiaries, such as FomaDev,
-        build and publish the software. The licenses belong to Fordima, so
-        every project follows the same clear rules, whichever team made it.
+      <p class="mt-3 text-sm text-zinc-400 leading-relaxed">
+        Fordima Inc. is the parent company. Its subsidiaries, such as FomaDev, build and publish the software. The licenses belong to Fordima, ensuring every project follows the exact same clear rules.
+      </p>
+    </header>
+
+    <!-- Side-by-Side Visual Overview Cards -->
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      <!-- FPL Card -->
+      <div class="rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/[0.08] to-zinc-900/60 p-6 sm:p-8 flex flex-col justify-between shadow-xl">
+        <div>
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-xs font-mono font-semibold text-emerald-400">
+              <ShieldIcon class="w-3.5 h-3.5" />
+              FPL
+            </span>
+            <span class="text-xs font-mono text-zinc-400">Public & Source-available</span>
+          </div>
+
+          <h3 class="mt-4 text-xl font-bold text-white">Fordima Public License</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+            Our license for open, collaborative software. Used by the majority of our tools, engines and libraries.
+          </p>
+
+          <ul class="mt-6 space-y-3 text-xs sm:text-sm text-zinc-300">
+            <li class="flex items-start gap-2.5">
+              <span class="p-0.5 rounded-full bg-emerald-500/20 text-emerald-400 shrink-0 mt-0.5">
+                <CheckIcon class="w-3.5 h-3.5" />
+              </span>
+              <span><strong>Free for commercial use:</strong> No fee, royalty, or registration required.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="p-0.5 rounded-full bg-emerald-500/20 text-emerald-400 shrink-0 mt-0.5">
+                <CheckIcon class="w-3.5 h-3.5" />
+              </span>
+              <span><strong>Open contributions:</strong> Fork, inspect, and submit pull requests anytime.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="p-0.5 rounded-full bg-emerald-500/20 text-emerald-400 shrink-0 mt-0.5">
+                <CheckIcon class="w-3.5 h-3.5" />
+              </span>
+              <span><strong>Integrate into your stack:</strong> Freely build parts into internal tools and systems.</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-zinc-400">
+              <span class="p-0.5 rounded-full bg-zinc-800 text-zinc-400 shrink-0 mt-0.5">
+                <ShieldIcon class="w-3.5 h-3.5" />
+              </span>
+              <span><strong>Protected against direct cloning:</strong> Paid agreement required to resell or host competing cloud services.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-8 pt-4 border-t border-emerald-500/20">
+          <a
+            href="#fpl"
+            class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+          >
+            <span>Jump to detailed FPL section</span>
+            <span>↓</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- FCL Card -->
+      <div class="rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-500/[0.08] to-zinc-900/60 p-6 sm:p-8 flex flex-col justify-between shadow-xl">
+        <div>
+          <div class="flex items-center justify-between gap-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-500/15 border border-amber-500/30 text-xs font-mono font-semibold text-amber-400">
+              <ShieldIcon class="w-3.5 h-3.5" />
+              FCL
+            </span>
+            <span class="text-xs font-mono text-zinc-400">Commercial Software</span>
+          </div>
+
+          <h3 class="mt-4 text-xl font-bold text-white">Fordima Commercial License</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+            Our license for paid software and commercial desktop/cloud editions like Kiva Studio Pro.
+          </p>
+
+          <ul class="mt-6 space-y-3 text-xs sm:text-sm text-zinc-300">
+            <li class="flex items-start gap-2.5">
+              <span class="p-0.5 rounded-full bg-amber-500/20 text-amber-400 shrink-0 mt-0.5">
+                <CheckIcon class="w-3.5 h-3.5" />
+              </span>
+              <span><strong>Free evaluation:</strong> Install, test locally and in staging without paying.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="p-0.5 rounded-full bg-amber-500/20 text-amber-400 shrink-0 mt-0.5">
+                <CheckIcon class="w-3.5 h-3.5" />
+              </span>
+              <span><strong>Production deployment:</strong> Run in live websites, client APIs and workflows under your plan.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="p-0.5 rounded-full bg-amber-500/20 text-amber-400 shrink-0 mt-0.5">
+                <CheckIcon class="w-3.5 h-3.5" />
+              </span>
+              <span><strong>Professional support:</strong> Direct SLAs, bug fixes and guaranteed updates.</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-zinc-400">
+              <span class="p-0.5 rounded-full bg-zinc-800 text-zinc-400 shrink-0 mt-0.5">
+                <ShieldIcon class="w-3.5 h-3.5" />
+              </span>
+              <span><strong>Funds open ecosystem:</strong> Commercial editions fund our free open-source tooling.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-8 pt-4 border-t border-amber-500/20">
+          <a
+            href="#fcl"
+            class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-400 hover:text-amber-300 transition-colors"
+          >
+            <span>Jump to detailed FCL section</span>
+            <span>↓</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Table Card -->
+    <div class="mt-14 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-8 overflow-hidden">
+      <h3 class="text-lg font-bold text-white mb-2">How the two work together</h3>
+      <p class="text-xs sm:text-sm text-zinc-400 mb-6">
+        A single product can use both: an FPL core that everyone can use and improve, and an FCL edition with advanced features for businesses that need them.
       </p>
 
-      <hr />
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs sm:text-sm border-separate border-spacing-0">
+          <thead>
+            <tr class="border-b border-zinc-800">
+              <th class="py-3 px-4 font-semibold text-zinc-400 border-b border-zinc-800">Feature / Dimension</th>
+              <th class="py-3 px-4 font-semibold text-emerald-400 border-b border-zinc-800">Fordima Public License (FPL)</th>
+              <th class="py-3 px-4 font-semibold text-amber-400 border-b border-zinc-800">Fordima Commercial License (FCL)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-800/60">
+            <tr>
+              <td class="py-3 px-4 font-medium text-zinc-200">Purpose</td>
+              <td class="py-3 px-4 text-zinc-400">Open, collaborative software</td>
+              <td class="py-3 px-4 text-zinc-400">Paid, commercial software</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-medium text-zinc-200">Cost</td>
+              <td class="py-3 px-4 text-emerald-400 font-medium">Free, including for businesses</td>
+              <td class="py-3 px-4 text-amber-400 font-medium">Paid for production use</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-medium text-zinc-200">Source code</td>
+              <td class="py-3 px-4 text-zinc-400">Public, open to contributions</td>
+              <td class="py-3 px-4 text-zinc-400">Available for evaluation only</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-medium text-zinc-200">Contributions</td>
+              <td class="py-3 px-4 text-zinc-400">Welcome via pull request</td>
+              <td class="py-3 px-4 text-zinc-500 font-mono">Not applicable</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-medium text-zinc-200">Competing products</td>
+              <td class="py-3 px-4 text-zinc-400">Require a paid license</td>
+              <td class="py-3 px-4 text-zinc-500 font-mono">Not permitted</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
+    <!-- Full Legal and Explanatory Content -->
+    <div class="prose prose-invert prose-emerald mt-16 max-w-none border-t border-zinc-800/80 pt-12">
       <h2 id="fpl">Fordima Public License (FPL)</h2>
 
       <p>
@@ -124,62 +303,25 @@ import Layout from '../layouts/Layout.astro';
         responsibilities, and that is what they need to rely on software in
         production.
       </p>
+    </div>
 
-      <hr />
-
-      <h2>How the two work together</h2>
-
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>FPL</th>
-            <th>FCL</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Purpose</strong></td>
-            <td>Open, collaborative software</td>
-            <td>Paid, commercial software</td>
-          </tr>
-          <tr>
-            <td><strong>Cost</strong></td>
-            <td>Free, including for businesses</td>
-            <td>Paid for production use</td>
-          </tr>
-          <tr>
-            <td><strong>Source code</strong></td>
-            <td>Public, open to contributions</td>
-            <td>Available for evaluation only</td>
-          </tr>
-          <tr>
-            <td><strong>Contributions</strong></td>
-            <td>Welcome via pull request</td>
-            <td>Not applicable</td>
-          </tr>
-          <tr>
-            <td><strong>Competing products</strong></td>
-            <td>Require a paid license</td>
-            <td>Not permitted</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>
-        A single product can use both: an FPL core that everyone can use and
-        improve, and an FCL edition with advanced features for businesses that
-        need them.
-      </p>
-
-      <hr />
-
-      <h2>Commercial licensing</h2>
-
-      <p>
-        To obtain a commercial license or discuss a custom agreement, please
-        contact the management of Fordima Inc.
-      </p>
+    <!-- Commercial License Inquiry Box -->
+    <div class="mt-16 rounded-2xl border border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-950 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div>
+        <h3 class="text-base sm:text-lg font-bold text-white">Need a Commercial License?</h3>
+        <p class="text-xs sm:text-sm text-zinc-400 mt-1 max-w-xl">
+          To obtain a commercial license, discuss enterprise agreements or request custom terms, contact the management team at Fordima Inc.
+        </p>
+      </div>
+      <a
+        href="https://github.com/fomadev"
+        target="_blank"
+        rel="noopener"
+        class="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-100 text-zinc-950 hover:bg-white text-xs sm:text-sm font-semibold transition-all shadow-md"
+      >
+        <span>Contact Fordima Inc.</span>
+        <ArrowUpRight class="w-3.5 h-3.5" />
+      </a>
     </div>
   </article>
 </Layout>

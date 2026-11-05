@@ -1,0 +1,20 @@
+---
+import WindowsIcon from './WindowsIcon.astro';
+import AppleIcon from './AppleIcon.astro';
+import LinuxIcon from './LinuxIcon.astro';
+import UniversalIcon from './UniversalIcon.astro';
+
+interface Props {
+  os: 'linux' | 'windows' | 'macos' | 'universal' | string;
+  class?: string;
+}
+
+const { os, class: className = 'w-4 h-4' } = Astro.props;
+---
+
+{os === 'windows' && <WindowsIcon class={className} />}
+{os === 'macos' && <AppleIcon class={className} />}
+{os === 'linux' && <LinuxIcon class={className} />}
+{os === 'universal' && <UniversalIcon class={className} />}
+{!['windows', 'macos', 'linux', 'universal'].includes(os) && <UniversalIcon class={className} />}
+

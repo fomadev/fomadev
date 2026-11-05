@@ -1,57 +1,471 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import ArrowRight from '../components/icons/ArrowRight.astro';
+import ArrowDown from '../components/icons/ArrowDown.astro';
+import ArrowUpRight from '../components/icons/ArrowUpRight.astro';
+import ShieldIcon from '../components/icons/ShieldIcon.astro';
+import SparklesIcon from '../components/icons/SparklesIcon.astro';
+import SearchIcon from '../components/icons/SearchIcon.astro';
+import OsIcon from '../components/icons/OsIcon.astro';
+import GithubIcon from '../components/icons/GithubIcon.astro';
 
 const projects = (await getCollection('projects'))
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const languageColors: Record<string, string> = {
+  Rust: 'bg-orange-500',
+  C: 'bg-blue-500',
+  C11: 'bg-blue-400',
+  TypeScript: 'bg-sky-400',
+  Flutter: 'bg-cyan-400',
+  PHP: 'bg-indigo-400',
+  'Node.js': 'bg-emerald-500',
+};
+
+const uniqueLanguages = Array.from(new Set(projects.map((p) => p.data.language)));
 ---
 
 <Layout>
-  <section class="max-w-5xl mx-auto px-6 pt-20 pb-12">
-    <h1 class="text-5xl font-bold tracking-tight">FomaDev</h1>
-    <p class="mt-4 text-lg text-zinc-400 max-w-2xl">
-      Performance-minded software built in C, Rust, and TypeScript. Most projects are
-      source-available under the
-      <a href="/license#fpl" class="text-emerald-400 hover:text-emerald-300 underline underline-offset-4">Fordima Public License</a>;
-      a few are commercial under the
-      <a href="/license#fcl" class="text-amber-400 hover:text-amber-300 underline underline-offset-4">Fordima Commercial License</a>.
-    </p>
+  <!-- Hero Section -->
+  <section class="relative pt-20 pb-16 md:pt-28 md:pb-24 border-b border-zinc-900/80">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-3xl">
+        <!-- Status Pill -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.15)] mb-6">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span>Source-available high performance software</span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.1]">
+          Engineered for <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500 bg-clip-text text-transparent">speed</span>, simplicity and control.
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="mt-6 text-lg sm:text-xl text-zinc-400 leading-relaxed font-normal">
+          High-throughput multi-model databases, minimal HTTP servers, compilers, and developer utilities. Crafted in
+          <span class="text-zinc-200 font-medium">C</span>,
+          <span class="text-zinc-200 font-medium">Rust</span>, and
+          <span class="text-zinc-200 font-medium">TypeScript</span>.
+          Free for business use under the
+          <a href="/license#fpl" class="text-emerald-400 hover:text-emerald-300 underline underline-offset-4 decoration-emerald-500/40">Fordima Public License</a>.
+        </p>
+
+        <!-- CTAs -->
+        <div class="mt-8 flex flex-wrap items-center gap-3.5">
+          <a
+            href="#projects"
+            class="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-zinc-950 shadow-[0_4px_24px_-4px_rgba(16,185,129,0.4)] hover:bg-emerald-400 hover:shadow-[0_4px_28px_-2px_rgba(16,185,129,0.5)] transition-all"
+          >
+            Explore Projects
+            <ArrowDown class="w-4 h-4" />
+          </a>
+          <a
+            href="/license"
+            class="inline-flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/80 px-5 py-3 text-sm font-medium text-zinc-300 hover:border-zinc-700 hover:bg-zinc-850 hover:text-white transition-all"
+          >
+            <ShieldIcon class="w-4 h-4 text-emerald-400" />
+            Licensing Terms
+          </a>
+          <a
+            href="https://github.com/fomadev"
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-2 rounded-xl border border-transparent px-4 py-3 text-sm font-medium text-zinc-400 hover:text-zinc-200 transition-colors"
+          >
+            <GithubIcon class="w-4 h-4" />
+            GitHub
+            <ArrowUpRight class="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Strip -->
+      <div class="mt-14 pt-8 border-t border-zinc-900 grid grid-cols-2 sm:grid-cols-4 gap-6">
+        <div>
+          <div class="text-2xl sm:text-3xl font-bold font-mono text-zinc-100">{projects.length}</div>
+          <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider font-medium">Active Projects</div>
+        </div>
+        <div>
+          <div class="text-2xl sm:text-3xl font-bold font-mono text-emerald-400">100%</div>
+          <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider font-medium">Source Available</div>
+        </div>
+        <div>
+          <div class="text-2xl sm:text-3xl font-bold font-mono text-zinc-100">{uniqueLanguages.length}</div>
+          <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider font-medium">Core Languages</div>
+        </div>
+        <div>
+          <div class="text-2xl sm:text-3xl font-bold font-mono text-amber-400">0$</div>
+          <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider font-medium">Free for Business Use</div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="max-w-5xl mx-auto px-6 pb-8">
-    <ul class="grid gap-6 sm:grid-cols-2">
+  <!-- Projects Explorer Section -->
+  <section id="projects" class="max-w-6xl mx-auto px-6 py-16 scroll-mt-20">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-zinc-900">
+      <div>
+        <div class="flex items-center gap-2.5">
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Ecosystem Projects</h2>
+          <span id="projects-count" class="px-2 py-0.5 text-xs font-mono font-medium rounded-full bg-zinc-800 text-zinc-400 border border-zinc-700/60">
+            {projects.length}
+          </span>
+        </div>
+        <p class="mt-1.5 text-sm text-zinc-400">
+          Filter and explore open-source tools and binaries.
+        </p>
+      </div>
+
+      <!-- Search Input -->
+      <div class="relative w-full md:w-72">
+        <SearchIcon class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
+        <input
+          id="project-search"
+          type="text"
+          placeholder="Search by name, tag, tech..."
+          class="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 pl-10 pr-4 py-2.5 text-xs sm:text-sm text-zinc-200 placeholder-zinc-500 focus:border-emerald-500/50 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 transition-all"
+        />
+      </div>
+    </div>
+
+    <!-- Filter Pills Bar -->
+    <div class="mt-6 flex flex-wrap items-center gap-2" id="filter-pills">
+      <span class="text-xs font-medium text-zinc-500 mr-1">Filter:</span>
+      <button
+        type="button"
+        data-filter="all"
+        class="filter-btn active rounded-lg px-3 py-1.5 text-xs font-medium border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 transition-all"
+      >
+        All
+      </button>
+      {uniqueLanguages.map((lang) => (
+        <button
+          type="button"
+          data-filter={`lang-${lang.toLowerCase()}`}
+          class="filter-btn rounded-lg px-3 py-1.5 text-xs font-medium border border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200 transition-all"
+        >
+          {lang}
+        </button>
+      ))}
+      <div class="h-4 w-px bg-zinc-800 mx-1 hidden sm:block"></div>
+      <button
+        type="button"
+        data-filter="license-fpl"
+        class="filter-btn rounded-lg px-3 py-1.5 text-xs font-medium border border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:border-emerald-500/40 hover:text-emerald-400 transition-all"
+      >
+        FPL
+      </button>
+      <button
+        type="button"
+        data-filter="license-fcl"
+        class="filter-btn rounded-lg px-3 py-1.5 text-xs font-medium border border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:border-amber-500/40 hover:text-amber-400 transition-all"
+      >
+        FCL
+      </button>
+    </div>
+
+    <!-- Projects Grid -->
+    <ul id="projects-list" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {projects.map((p) => {
         const isFPL = p.data.license === 'FPL';
-        const badgeClass = isFPL
-          ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-          : 'bg-amber-500/10 border-amber-500/30 text-amber-400';
+        const badgeBorder = isFPL
+          ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10'
+          : 'border-amber-500/30 text-amber-400 bg-amber-500/10';
+        const langDotColor = languageColors[p.data.language] || 'bg-zinc-400';
+        
+        // Collect OS platforms available in downloads
+        const downloadOsList = Array.from(
+          new Set(
+            (p.data.downloads ?? []).flatMap((d) => d.files.map((f) => f.os))
+          )
+        );
+
         return (
-          <li>
+          <li
+            class="project-card group"
+            data-title={p.data.title.toLowerCase()}
+            data-desc={p.data.description.toLowerCase()}
+            data-lang={p.data.language.toLowerCase()}
+            data-tags={p.data.tags.join(' ').toLowerCase()}
+            data-license={p.data.license.toLowerCase()}
+          >
             <a
               href={`/projects/${p.id}/`}
-              class="group block h-full rounded-xl border border-zinc-800 bg-zinc-900 p-6 hover:border-emerald-500/50 transition-colors"
+              class="relative flex flex-col h-full rounded-2xl border border-zinc-800/80 bg-zinc-900/60 p-6 card-hover-effect hover:border-zinc-700 hover:bg-zinc-900/90 overflow-hidden shadow-lg"
             >
-              <div class="flex items-start justify-between gap-4">
-                <h2 class="text-xl font-semibold group-hover:text-emerald-400 transition-colors">
-                  {p.data.title}
-                </h2>
-                <div class="shrink-0 flex flex-wrap gap-1.5">
-                  <span class="rounded bg-zinc-800 px-2 py-1 text-xs text-zinc-300">
+              <!-- Subtle card top glow accent -->
+              <div class={`absolute top-0 inset-x-0 h-[2px] transition-opacity duration-300 opacity-0 group-hover:opacity-100 ${isFPL ? 'bg-gradient-to-r from-transparent via-emerald-400 to-transparent' : 'bg-gradient-to-r from-transparent via-amber-400 to-transparent'}`}></div>
+
+              <!-- Top Row: Language + License + Featured -->
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center gap-1.5 rounded-md bg-zinc-800/80 border border-zinc-700/60 px-2.5 py-1 text-xs font-mono text-zinc-300">
+                    <span class={`w-2 h-2 rounded-full ${langDotColor}`}></span>
                     {p.data.language}
                   </span>
-                  <span class={`rounded border px-2 py-1 text-xs ${badgeClass}`}>
-                    {isFPL ? 'FPL' : 'FCL'}
-                  </span>
+                  {p.data.featured && (
+                    <span class="inline-flex items-center gap-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-medium text-emerald-400">
+                      <SparklesIcon class="w-3 h-3" />
+                      Featured
+                    </span>
+                  )}
                 </div>
+
+                <span class={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[11px] font-mono font-medium ${badgeBorder}`}>
+                  <ShieldIcon class="w-3 h-3" />
+                  {isFPL ? 'FPL' : 'FCL'}
+                </span>
               </div>
-              <p class="mt-3 text-sm text-zinc-400">{p.data.description}</p>
-              <div class="mt-6 text-xs text-zinc-500 group-hover:text-zinc-300 transition-colors">
-                Read more →
+
+              <!-- Title -->
+              <h3 class="mt-4 text-xl font-bold tracking-tight text-white group-hover:text-emerald-400 transition-colors">
+                {p.data.title}
+              </h3>
+
+              <!-- Description -->
+              <p class="mt-2.5 text-sm text-zinc-400 leading-relaxed flex-1">
+                {p.data.description}
+              </p>
+
+              <!-- Tags list -->
+              {p.data.tags.length > 0 && (
+                <div class="mt-4 flex flex-wrap gap-1.5">
+                  {p.data.tags.slice(0, 4).map((tag) => (
+                    <span class="rounded bg-zinc-950/70 border border-zinc-800 px-2 py-0.5 text-[11px] font-mono text-zinc-400">
+                      #{tag}
+                    </span>
+                  ))}
+                  {p.data.tags.length > 4 && (
+                    <span class="rounded bg-zinc-950/70 border border-zinc-800 px-2 py-0.5 text-[11px] font-mono text-zinc-500">
+                      +{p.data.tags.length - 4}
+                    </span>
+                  )}
+                </div>
+              )}
+
+              <!-- Bottom Row: Download platforms & Arrow link -->
+              <div class="mt-6 pt-4 border-t border-zinc-800/80 flex items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-1.5 text-zinc-500">
+                  {downloadOsList.length > 0 ? (
+                    <div class="flex items-center gap-1.5" title="Available platforms">
+                      <span class="text-[11px] font-medium text-zinc-500">Builds:</span>
+                      <div class="flex items-center gap-1 text-zinc-400">
+                        {downloadOsList.map((os) => (
+                          <span class="p-1 rounded bg-zinc-800/60 border border-zinc-700/50">
+                            <OsIcon os={os} class="w-3 h-3" />
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <span class="font-mono text-zinc-600">Source only</span>
+                  )}
+                </div>
+
+                <div class="inline-flex items-center gap-1 font-medium text-emerald-400 group-hover:text-emerald-300 transition-colors">
+                  <span>Explore</span>
+                  <ArrowRight class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
             </a>
           </li>
         );
       })}
     </ul>
+
+    <!-- Empty State -->
+    <div id="no-results" class="hidden mt-12 text-center py-12 rounded-2xl border border-zinc-800 bg-zinc-900/40">
+      <div class="inline-flex p-3 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-400 mb-3">
+        <SearchIcon class="w-6 h-6" />
+      </div>
+      <h3 class="text-base font-semibold text-zinc-200">No projects found</h3>
+      <p class="text-sm text-zinc-500 mt-1 max-w-sm mx-auto">
+        Try adjusting your search query or clear the active language filters.
+      </p>
+      <button
+        id="reset-filter-btn"
+        type="button"
+        class="mt-4 px-4 py-2 rounded-lg bg-emerald-500 text-zinc-950 text-xs font-semibold hover:bg-emerald-400 transition-colors"
+      >
+        Reset filters
+      </button>
+    </div>
   </section>
+
+  <!-- Dual Licensing Highlight Section -->
+  <section class="max-w-6xl mx-auto px-6 pb-20">
+    <div class="rounded-3xl border border-zinc-800/90 bg-gradient-to-b from-zinc-900/80 to-zinc-950 p-8 sm:p-12 relative overflow-hidden">
+      <!-- Glow decoration -->
+      <div class="pointer-events-none absolute -right-20 -top-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl"></div>
+
+      <div class="max-w-2xl">
+        <span class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">Dual Licensing Model</span>
+        <h2 class="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-white">
+          Clear, balanced licensing designed for builders
+        </h2>
+        <p class="mt-3 text-sm sm:text-base text-zinc-400 leading-relaxed">
+          Fordima software is built to be accessible to developers, startups, and enterprises worldwide, with guaranteed transparency and sustainable funding.
+        </p>
+      </div>
+
+      <div class="mt-8 grid gap-6 md:grid-cols-2">
+        <!-- FPL Card -->
+        <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/[0.03] p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-xs font-mono font-medium text-emerald-400">
+                <ShieldIcon class="w-3.5 h-3.5" />
+                Fordima Public License (FPL)
+              </span>
+              <span class="text-xs text-zinc-500 font-mono">Most projects</span>
+            </div>
+            <h4 class="mt-4 text-lg font-semibold text-white">Source-available & Free for Business</h4>
+            <p class="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              Use freely in commercial products, learn, fork, and contribute back. A paid agreement is only required if you resell the code directly or host a competing cloud service.
+            </p>
+          </div>
+          <a
+            href="/license#fpl"
+            class="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+          >
+            <span>Read full FPL terms</span>
+            <ArrowRight class="w-3.5 h-3.5" />
+          </a>
+        </div>
+
+        <!-- FCL Card -->
+        <div class="rounded-2xl border border-amber-500/30 bg-amber-500/[0.03] p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-xs font-mono font-medium text-amber-400">
+                <ShieldIcon class="w-3.5 h-3.5" />
+                Fordima Commercial License (FCL)
+              </span>
+              <span class="text-xs text-zinc-500 font-mono">Commercial tools</span>
+            </div>
+            <h4 class="mt-4 text-lg font-semibold text-white">Production & Commercial Solutions</h4>
+            <p class="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              Tailored for commercial editions such as Kiva Studio. Free evaluation for local and staging environments, with commercial licensing for production deployment and dedicated enterprise support.
+            </p>
+          </div>
+          <a
+            href="/license#fcl"
+            class="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-amber-400 hover:text-amber-300 transition-colors"
+          >
+            <span>Read full FCL terms</span>
+            <ArrowRight class="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client-side filtering script -->
+  <script is:inline>
+    (function () {
+      const searchInput = document.getElementById('project-search');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll('.project-card');
+      const noResults = document.getElementById('no-results');
+      const projectsCount = document.getElementById('projects-count');
+      const resetBtn = document.getElementById('reset-filter-btn');
+
+      let currentFilter = 'all';
+      let currentQuery = '';
+
+      function applyFilters() {
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const title = card.getAttribute('data-title') || '';
+          const desc = card.getAttribute('data-desc') || '';
+          const lang = card.getAttribute('data-lang') || '';
+          const tags = card.getAttribute('data-tags') || '';
+          const license = card.getAttribute('data-license') || '';
+
+          const matchesQuery =
+            !currentQuery ||
+            title.includes(currentQuery) ||
+            desc.includes(currentQuery) ||
+            tags.includes(currentQuery) ||
+            lang.includes(currentQuery);
+
+          let matchesFilter = true;
+          if (currentFilter !== 'all') {
+            if (currentFilter.startsWith('lang-')) {
+              const targetLang = currentFilter.replace('lang-', '');
+              matchesFilter = lang.toLowerCase() === targetLang.toLowerCase();
+            } else if (currentFilter === 'license-fpl') {
+              matchesFilter = license.toLowerCase() === 'fpl';
+            } else if (currentFilter === 'license-fcl') {
+              matchesFilter = license.toLowerCase() === 'fcl';
+            }
+          }
+
+          if (matchesQuery && matchesFilter) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        if (projectsCount) {
+          projectsCount.textContent = `${visibleCount}`;
+        }
+
+        if (noResults) {
+          if (visibleCount === 0) {
+            noResults.classList.remove('hidden');
+          } else {
+            noResults.classList.add('hidden');
+          }
+        }
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          currentQuery = e.target.value.trim().toLowerCase();
+          applyFilters();
+        });
+      }
+
+      filterButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach((b) => {
+            b.classList.remove('active', 'border-emerald-500/40', 'bg-emerald-500/10', 'text-emerald-400');
+            b.classList.add('border-zinc-800', 'bg-zinc-900/60', 'text-zinc-400');
+          });
+          btn.classList.add('active', 'border-emerald-500/40', 'bg-emerald-500/10', 'text-emerald-400');
+          btn.classList.remove('border-zinc-800', 'bg-zinc-900/60', 'text-zinc-400');
+
+          currentFilter = btn.getAttribute('data-filter') || 'all';
+          applyFilters();
+        });
+      });
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          if (searchInput) searchInput.value = '';
+          currentQuery = '';
+          currentFilter = 'all';
+          filterButtons.forEach((b) => {
+            if (b.getAttribute('data-filter') === 'all') {
+              b.classList.add('active', 'border-emerald-500/40', 'bg-emerald-500/10', 'text-emerald-400');
+              b.classList.remove('border-zinc-800', 'bg-zinc-900/60', 'text-zinc-400');
+            } else {
+              b.classList.remove('active', 'border-emerald-500/40', 'bg-emerald-500/10', 'text-emerald-400');
+              b.classList.add('border-zinc-800', 'bg-zinc-900/60', 'text-zinc-400');
+            }
+          });
+          applyFilters();
+        });
+      }
+    })();
+  </script>
 </Layout>

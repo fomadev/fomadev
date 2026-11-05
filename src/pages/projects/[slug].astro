@@ -1,6 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import DownloadVersion from '../../components/DownloadVersion.astro';
+import ArrowLeft from '../../components/icons/ArrowLeft.astro';
+import ArrowDown from '../../components/icons/ArrowDown.astro';
+import ArrowUp from '../../components/icons/ArrowUp.astro';
+import ArrowUpRight from '../../components/icons/ArrowUpRight.astro';
+import GithubIcon from '../../components/icons/GithubIcon.astro';
+import ShieldIcon from '../../components/icons/ShieldIcon.astro';
+import SparklesIcon from '../../components/icons/SparklesIcon.astro';
+import DownloadIcon from '../../components/icons/DownloadIcon.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -15,10 +23,22 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 
 const isFPL = project.data.license === 'FPL';
-const licenseLabel = isFPL ? 'Source-available' : 'Commercial';
-const licenseClass = isFPL
+const licenseLabel = isFPL ? 'Source-available (FPL)' : 'Commercial (FCL)';
+const licenseBadgeClass = isFPL
   ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
   : 'bg-amber-500/10 border-amber-500/30 text-amber-400';
+
+const languageColors: Record<string, string> = {
+  Rust: 'bg-orange-500',
+  C: 'bg-blue-500',
+  C11: 'bg-blue-400',
+  TypeScript: 'bg-sky-400',
+  Flutter: 'bg-cyan-400',
+  PHP: 'bg-indigo-400',
+  'Node.js': 'bg-emerald-500',
+};
+
+const langDotColor = languageColors[project.data.language] || 'bg-zinc-400';
 
 const versions = project.data.downloads ?? [];
 const latestVersionId = project.data.latestVersion;
@@ -31,112 +51,200 @@ const hasOlder = older.length > 0;
   title={`${project.data.title} — FomaDev`}
   description={project.data.description}
 >
-  <article class="max-w-3xl mx-auto px-6 py-16">
-    <a href="/" class="text-sm text-zinc-500 hover:text-zinc-300">← All projects</a>
+  <article class="max-w-4xl mx-auto px-6 py-12 md:py-16">
+    <!-- Breadcrumb & Back -->
+    <nav class="flex items-center justify-between text-xs sm:text-sm text-zinc-400 mb-8 pb-6 border-b border-zinc-900">
+      <a
+        href="/#projects"
+        class="group inline-flex items-center gap-2 text-zinc-400 hover:text-emerald-400 transition-colors"
+      >
+        <ArrowLeft class="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+        <span>Back to all projects</span>
+      </a>
 
-    <div class="mt-6 flex flex-wrap items-center gap-3">
-      <h1 class="text-4xl font-bold tracking-tight">{project.data.title}</h1>
-      <span class="rounded bg-zinc-800 px-2 py-1 text-xs text-zinc-300">
-        {project.data.language}
-      </span>
-      <span class={`rounded border px-2 py-1 text-xs ${licenseClass}`}>
-        {licenseLabel}
-      </span>
-    </div>
+      <div class="hidden sm:flex items-center gap-2 text-zinc-500 font-mono text-xs">
+        <a href="/" class="hover:text-zinc-300">fomadev</a>
+        <span>/</span>
+        <a href="/#projects" class="hover:text-zinc-300">projects</a>
+        <span>/</span>
+        <span class="text-zinc-300">{project.id}</span>
+      </div>
+    </nav>
 
-    <p class="mt-4 text-lg text-zinc-400">{project.data.description}</p>
+    <!-- Project Header -->
+    <header class="space-y-6">
+      <div class="flex flex-wrap items-center gap-2.5">
+        <!-- Language Badge -->
+        <span class="inline-flex items-center gap-1.5 rounded-lg bg-zinc-800/80 border border-zinc-700/60 px-3 py-1 text-xs font-mono text-zinc-200">
+          <span class={`w-2 h-2 rounded-full ${langDotColor}`}></span>
+          {project.data.language}
+        </span>
 
-    {project.data.tags.length > 0 && (
-      <ul class="mt-4 flex flex-wrap gap-2">
-        {project.data.tags.map((t) => (
-          <li class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">
-            {t}
-          </li>
-        ))}
-      </ul>
-    )}
+        <!-- License Badge with Link -->
+        <a
+          href={`/license#${isFPL ? 'fpl' : 'fcl'}`}
+          class={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-mono font-medium transition-all ${licenseBadgeClass} hover:opacity-85`}
+        >
+          <ShieldIcon class="w-3.5 h-3.5" />
+          {licenseLabel}
+        </a>
 
+        <!-- Latest Version Tag -->
+        {project.data.latestVersion && (
+          <span class="inline-flex items-center gap-1 rounded-lg bg-zinc-900 border border-zinc-800 px-2.5 py-1 text-xs font-mono text-zinc-400">
+            v{project.data.latestVersion}
+          </span>
+        )}
+
+        <!-- Featured Badge -->
+        {project.data.featured && (
+          <span class="inline-flex items-center gap-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-1 text-xs font-medium text-emerald-400">
+            <SparklesIcon class="w-3.5 h-3.5" />
+            Featured Project
+          </span>
+        )}
+      </div>
+
+      <!-- Main Title -->
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+        {project.data.title}
+      </h1>
+
+      <!-- Description -->
+      <p class="text-lg sm:text-xl text-zinc-300 leading-relaxed max-w-3xl font-normal">
+        {project.data.description}
+      </p>
+
+      <!-- Tags -->
+      {project.data.tags.length > 0 && (
+        <ul class="flex flex-wrap gap-2 pt-1">
+          {project.data.tags.map((t) => (
+            <li class="rounded-lg border border-zinc-800/90 bg-zinc-900/60 px-3 py-1 text-xs font-mono text-zinc-400">
+              #{t}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <!-- Primary Action Buttons -->
+      <div class="flex flex-wrap items-center gap-3 pt-2">
+        {project.data.githubUrl && (
+          <a
+            href={project.data.githubUrl}
+            target="_blank"
+            rel="noopener"
+            class="group inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-zinc-950 shadow-[0_4px_20px_-4px_rgba(16,185,129,0.35)] hover:bg-emerald-400 transition-all"
+          >
+            <GithubIcon class="w-4 h-4 text-zinc-950" />
+            <span>View on GitHub</span>
+            <ArrowUpRight class="w-3.5 h-3.5 text-zinc-950 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </a>
+        )}
+
+        {versions.length > 0 && (
+          <a
+            href="#downloads"
+            class="inline-flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900 px-5 py-2.5 text-sm font-medium text-zinc-200 hover:border-zinc-700 hover:bg-zinc-850 hover:text-white transition-all"
+          >
+            <DownloadIcon class="w-4 h-4 text-emerald-400" />
+            <span>Downloads ({versions.length})</span>
+            <ArrowDown class="w-3.5 h-3.5 text-zinc-500" />
+          </a>
+        )}
+      </div>
+    </header>
+
+    <!-- App / Project Image Showcase with Window Mockup -->
     {project.data.image && (
-      <figure class="mt-8">
-        <img
-          src={project.data.image.src}
-          alt={project.data.image.alt}
-          loading="lazy"
-          class="w-full rounded-xl border border-zinc-800 bg-zinc-900"
-        />
+      <figure class="mt-12 group">
+        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/90 shadow-2xl overflow-hidden">
+          <!-- Window Titlebar -->
+          <div class="h-9 px-4 bg-zinc-950/80 border-b border-zinc-800/80 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-zinc-700/60"></span>
+              <span class="w-3 h-3 rounded-full bg-zinc-700/60"></span>
+              <span class="w-3 h-3 rounded-full bg-zinc-700/60"></span>
+            </div>
+            <span class="text-xs font-mono text-zinc-500 truncate max-w-xs">
+              {project.data.title}
+            </span>
+            <div class="w-12"></div>
+          </div>
+          <!-- Image -->
+          <img
+            src={project.data.image.src}
+            alt={project.data.image.alt}
+            loading="lazy"
+            class="w-full object-cover"
+          />
+        </div>
       </figure>
     )}
 
-    <div class="mt-10 flex flex-wrap gap-3">
-      {project.data.githubUrl && (
-        <a
-          href={project.data.githubUrl}
-          target="_blank"
-          rel="noopener"
-          class="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-medium text-zinc-950 hover:bg-emerald-400 transition-colors"
-        >
-          View on GitHub ↗
-        </a>
-      )}
-    </div>
-
-    {/* Section Latest : reste ici, juste après le bouton GitHub */}
+    <!-- Downloads Section (Latest) -->
     {versions.length > 0 && (
-      <div class="mt-12">
-        <h2 class="text-sm font-medium uppercase tracking-wider text-zinc-500">
-          Download
-        </h2>
+      <section id="downloads" class="mt-14 pt-10 border-t border-zinc-900 scroll-mt-24">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <DownloadIcon class="w-4 h-4 text-emerald-400" />
+            <h2 class="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400">
+              Downloads & Binaries
+            </h2>
+          </div>
+          {hasOlder && (
+            <a
+              href="#all-versions"
+              class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
+            >
+              <span>See older versions ({older.length})</span>
+              <ArrowDown class="w-3 h-3" />
+            </a>
+          )}
+        </div>
 
         {latest ? (
-          <div class="mt-4">
-            <DownloadVersion
-              version={latest.version}
-              date={latest.date}
-              files={latest.files}
-              isLatest={true}
-            />
-          </div>
+          <DownloadVersion
+            version={latest.version}
+            date={latest.date}
+            files={latest.files}
+            isLatest={true}
+          />
         ) : (
           <p class="mt-3 text-sm text-zinc-500">
             No latest version is marked for this project.
           </p>
         )}
-
-        {hasOlder && (
-          <a
-            href="#all-versions"
-            class="mt-4 inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-emerald-400 transition-colors"
-          >
-            See all versions ({versions.length}) <span>↓</span>
-          </a>
-        )}
-      </div>
+      </section>
     )}
 
-    {/* Contenu Markdown du projet */}
-    <div class="prose prose-invert prose-emerald mt-12 max-w-none">
+    <!-- Markdown Documentation Body -->
+    <div class="prose prose-invert prose-emerald mt-14 max-w-none border-t border-zinc-900 pt-10">
       <Content />
     </div>
 
-    {/* Section "All versions" : tout en bas de la page */}
+    <!-- All Older Versions Section -->
     {hasOlder && (
       <section
         id="all-versions"
-        class="mt-20 pt-10 border-t border-zinc-800"
+        class="mt-20 pt-10 border-t border-zinc-800 scroll-mt-24"
       >
-        <div class="flex items-center justify-between">
-          <h2 class="text-sm font-medium uppercase tracking-wider text-zinc-500">
-            All versions
-          </h2>
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-2">
+            <DownloadIcon class="w-4 h-4 text-zinc-400" />
+            <h2 class="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400">
+              Release Archive
+            </h2>
+          </div>
           <a
             href="#top"
-            class="text-xs text-zinc-600 hover:text-zinc-300 transition-colors"
+            class="inline-flex items-center gap-1 text-xs font-medium text-zinc-500 hover:text-emerald-400 transition-colors"
           >
-            ↑ Back to top
+            <span>Back to top</span>
+            <ArrowUp class="w-3 h-3" />
           </a>
         </div>
 
-        <div class="mt-4 space-y-3">
+        <div class="space-y-4">
           {older.map((v) => (
             <DownloadVersion
               version={v.version}
@@ -147,5 +255,32 @@ const hasOlder = older.length > 0;
         </div>
       </section>
     )}
+
+    <!-- Bottom Project Footer Card -->
+    <footer class="mt-20 pt-8 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-400">
+      <a
+        href="/#projects"
+        class="inline-flex items-center gap-2 text-zinc-300 hover:text-emerald-400 transition-colors"
+      >
+        <ArrowLeft class="w-4 h-4" />
+        <span>Return to all projects</span>
+      </a>
+
+      <div class="flex items-center gap-4 text-xs font-mono">
+        <a href="/license" class="hover:text-emerald-400 transition-colors">
+          Licensing overview
+        </a>
+        <span>·</span>
+        <a
+          href="https://github.com/fomadev"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-1 hover:text-white transition-colors"
+        >
+          <span>fomadev on GitHub</span>
+          <ArrowUpRight class="w-3 h-3" />
+        </a>
+      </div>
+    </footer>
   </article>
 </Layout>

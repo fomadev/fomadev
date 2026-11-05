@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Déclenche le workflow à chaque push sur la branche 'main'
+  push:
+    branches: [ main ]
+  # Permet de lancer le workflow manuellement depuis l'onglet Actions
+  workflow_dispatch:
+
+# Autorise le job à cloner le dépôt et à créer un déploiement de page
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Autorise un seul déploiement simultané
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository using git
+        uses: actions/checkout@v7
+      - name: Install, build, and upload your site
+        uses: withastro/action@v6
+        # avec les options par défaut (Node.js 24, npm détecté via package-lock.json)
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

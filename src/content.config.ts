@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 const downloadFile = z.object({
-  os: z.enum(['linux', 'windows', 'macos']),
+  os: z.enum(['linux', 'windows', 'macos', 'universal']),
   label: z.string(),
   url: z.string().regex(
     /^(https?:\/\/.+|\/.+)$/,

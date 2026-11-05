@@ -9,10 +9,13 @@ license: FCL
 image:
   src: /screenshots/kiva-studio-data.png
   alt: Kiva Studio data browser showing a key-value workspace with editable values.
+latestVersion: "0.1.0"
 downloads:
-  - os: windows
-    label: Windows (x64) — Early Access
-    url: /downloads/kiva-studio-windows-x64.zip
+  - version: "0.1.0"
+    files:
+      - os: windows
+        label: Windows (x64) — Early Access
+        url: /downloads/kiva-studio-windows-x64.zip
 ---
 
 Kiva Studio is the graphical client for [KivaDB](https://github.com/fomadev/kiva-db).
@@ -51,7 +54,7 @@ Works with both **KivaDB 2.0** and **1.x**, adapting to the version the server a
 
 ## Platform support
 
-- **Windows** — available now (Early Access build below)
+- **Windows** — available now (Early Access build)
 - **Linux and macOS** — planned
 
 ## License
